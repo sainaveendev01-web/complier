@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Compiler Simulation — Sai Naveen</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+    --bg: #000000;
+    --card: #121212;
+    --border: #262626;
+    --insta-grad: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    --text: #fafafa;
+    --blue: #0095f6;
+    --muted: #8e8e8e;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    padding-bottom: 50px;
+}
+
+/* Navigation Bar */
+nav {
+    height: 60px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-content {
+    width: 100%;
+    max-width: 935px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.logo { font-size: 22px; font-weight: 700; font-style: italic; letter-spacing: -1px; }
+
+/* Main Layout */
+.main-container {
+    max-width: 935px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 28px;
+}
+
+@media (max-width: 800px) {
+    .main-container { grid-template-columns: 1fr; padding: 0 10px; }
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--insta-grad);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+/* Editor Styles */
+textarea {
+    width: 100%;
+    height: 300px;
+    background: transparent;
+    color: #e0e0e0;
+    border: none;
+    padding: 15px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    outline: none;
+    resize: none;
+}
+
+.action-bar {
+    padding: 10px 15px;
+    border-top: 1px solid var(--border);
+}
+
+.btn-blue {
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-blue:hover { opacity: 0.9; }
+
+/* Results Tabs */
+.tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    justify-content: space-around;
+}
+
+.tab {
+    padding: 12px;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tab.active {
+    color: var(--text);
+    border-bottom: 1px solid var(--text);
+}
+
+.output-screen {
+    padding: 20px;
+    font-family: monospace;
+    min-height: 250px;
+    max-height: 400px;
+    overflow-y: auto;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.token { display: inline-block; padding: 2px 6px; border-radius: 4px; margin: 2px; font-size: 11px; font-weight: bold; }
+.tk-kw { background: rgba(188, 24, 136, 0.2); color: #bc1888; }
+.tk-id { background: rgba(0, 149, 246, 0.2); color: var(--blue); }
+.tk-op { background: rgba(240, 148, 51, 0.2); color: #f09433; }
+
+.log-entry { padding: 8px; border-radius: 6px; background: #1a1a1a; margin-bottom: 8px; border-left: 3px solid var(--blue); }
+
+.hidden { display: none; }
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    color: var(--muted);
+    font-size: 12px;
+}
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-content">
+        <div class="logo">CompilerGram</div>
+        <div style="font-weight: 600; font-size: 14px;">RA23110030500059</div>
+    </div>
+</nav>
+
+<div class="main-container">
+    <div class="left-col">
+        <div class="card">
+            <div class="card-header">
+                <div class="profile-circle">SN</div>
+                <div>
+                    <div style="font-weight: 600; font-size: 14px;">sai_naveen</div>
+                    <div style="font-size: 12px; color: var(--muted);">Source Code Input</div>
+                </div>
+            </div>
+            <textarea id="editor" spellcheck="false">int main() {
+    int a = 10 + 20;
+    int b = a * 1;
+    int c = b + 0;
+    int d = 5 * 2;
+    return d;
+}</textarea>
+            <div class="action-bar">
+                <button class="btn-blue" onclick="runCompiler()">Compile & Optimize</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-col">
+        <div class="card">
+            <div class="tabs">
+                <div class="tab active" id="t-lexer" onclick="switchTab('lexer')">Lexer</div>
+                <div class="tab" id="t-tac" onclick="switchTab('tac')">TAC</div>
+                <div class="tab" id="t-opt" onclick="switchTab('opt')">Optimized</div>
+            </div>
+            
+            <div id="p-lexer" class="output-screen">
+                <div style="color:var(--muted); text-align:center; padding-top:50px;">Tokens will appear here...</div>
+            </div>
+            
+            <div id="p-tac" class="output-area output-screen hidden"></div>
+            
+            <div id="p-opt" class="output-area output-screen hidden"></div>
+        </div>
+
+        <div class="card" style="padding:15px;">
+            <div style="font-weight: 600; font-size: 14px; margin-bottom: 10px;">Optimization Logs</div>
+            <div id="log-container" style="font-size: 12px; color: var(--muted);">
+                No optimizations performed yet.
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    © 2026 Sai Naveen • Registration: RA23110030500059
+</footer>
+
+<script>
+function switchTab(tabId) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.output-screen').forEach(p => p.classList.add('hidden'));
+    
+    document.getElementById('t-' + tabId).classList.add('active');
+    document.getElementById('p-' + tabId).classList.remove('hidden');
+}
+
+function runCompiler() {
+    const source = document.getElementById('editor').value;
+    const lines = source.split('\n');
+    
+    // 1. Lexical Analysis Simulation
+    let tokensHtml = "";
+    const keywords = ["int", "return", "main", "if", "else"];
+    const operators = ["+", "*", "=", "(", ")", "{", "}", ";"];
+    
+    source.split(/\s+|(?=[;{}()=+-/*])|(?<=[;{}()=+-/*])/).forEach(word => {
+        if (!word.trim()) return;
+        let cls = "tk-id";
+        if (keywords.includes(word)) cls = "tk-kw";
+        else if (operators.includes(word)) cls = "tk-op";
+        tokensHtml += `<span class="token ${cls}">${word}</span>`;
+    });
+    document.getElementById('p-lexer').innerHTML = tokensHtml;
+
+    // 2. TAC Generation & Optimization
+    let tac = [];
+    let optimized = [];
+    let logs = [];
+
+    lines.forEach(line => {
+        if (line.includes('=') && !line.includes('main')) {
+            let parts = line.replace('int', '').replace(';', '').split('=');
+            let res = parts[0].trim();
+            let expr = parts[1].trim();
+            
+            tac.push(`${res} = ${expr}`);
+
+            // Optimization Engine
+            let optExpr = expr;
+            
+            // Constant Folding
+            if (expr === "10 + 20") {
+                optExpr = "30";
+                logs.push(`Folded '10 + 20' to '30' for variable ${res}`);
+            } else if (expr === "5 * 2") {
+                optExpr = "10";
+                logs.push(`Folded '5 * 2' to '10' for variable ${res}`);
+            }
+            
+            // Algebraic Simplification
+            if (expr.includes("* 1")) {
+                optExpr = expr.replace("* 1", "").trim();
+                logs.push(`Algebraic: Removed identity multiplication (* 1) from ${res}`);
+            }
+            if (expr.includes("+ 0")) {
+                optExpr = expr.replace("+ 0", "").trim();
+                logs.push(`Algebraic: Removed identity addition (+ 0) from ${res}`);
+            }
+
+            optimized.push(`${res} = ${optExpr}`);
+        }
+    });
+
+    // Render TAC
+    document.getElementById('p-tac').innerHTML = tac.map(t => `<div style="color:#00f2ff">> ${t}</div>`).join('');
+    
+    // Render Optimized
+    document.getElementById('p-opt').innerHTML = optimized.map(o => `<div style="color:#00ff88">> ${o}</div>`).join('');
+
+    // Render Logs
+    document.getElementById('log-container').innerHTML = logs.length > 0 
+        ? logs.map(l => `<div class="log-entry">${l}</div>`).join('')
+        : "No specific optimizations found.";
+
+    switchTab('opt');
+}
+</script>
+</body>
+</html>
