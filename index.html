@@ -2,159 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Compiler Lab | Sai Naveen</title>
+    <title>Sai Naveen | Compiler Lab</title>
     <style>
         :root {
-            --bg: #0b0f1a;
-            --card: #161b2a;
-            --border: #2d334a;
-            --accent: #38bdf8;
-            --text-main: #f1f5f9;
-            --text-dim: #94a3b8;
-            --grad: linear-gradient(135deg, #38bdf8 0%, #22d3ee 100%);
+            --bg: #000000;
+            --card: #121212;
+            --border: #262626;
+            --insta-blue: #0095f6;
+            --insta-grad: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            --text: #fafafa;
+            --secondary-text: #8e8e8e;
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
         body {
             background-color: var(--bg);
-            color: var(--text-main);
-            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            overflow: hidden;
+            margin: 0;
         }
-
-        .container {
+        .profile-container {
             width: 100%;
-            max-width: 500px;
+            max-width: 400px;
             text-align: center;
-            padding: 20px;
-        }
-
-        .profile-card {
-            background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 40px 30px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            position: relative;
+            padding: 40px 20px;
+            border-radius: 12px;
+            background: var(--card);
         }
-
-        .avatar-container {
+        .story-ring {
             width: 100px;
             height: 100px;
-            margin: 0 auto 24px;
-            position: relative;
-        }
-
-        .avatar-ring {
-            width: 100%;
-            height: 100%;
+            background: var(--insta-grad);
             border-radius: 50%;
-            background: var(--grad);
+            margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: pulse 2s infinite;
+            padding: 3px;
         }
-
-        .avatar-inner {
-            width: 90%;
-            height: 90%;
-            background: var(--card);
+        .profile-pic {
+            background: var(--bg);
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 32px;
-            font-weight: 800;
-            color: var(--accent);
-        }
-
-        h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
-
-        .reg-no {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--accent);
-            font-weight: 600;
-            background: rgba(56, 189, 248, 0.1);
-            padding: 4px 12px;
-            border-radius: 999px;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
-        .description {
-            color: var(--text-dim);
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 32px;
-        }
-
-        .btn-launch {
-            display: block;
-            background: var(--grad);
-            color: #0b0f1a;
-            text-decoration: none;
-            padding: 14px 28px;
-            border-radius: 12px;
             font-weight: 700;
-            font-size: 16px;
-            transition: transform 0.2s, box-shadow 0.2s;
         }
-
-        .btn-launch:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
+        h1 { font-size: 24px; font-weight: 600; margin: 10px 0; }
+        .reg-number { color: var(--secondary-text); font-size: 16px; margin-bottom: 25px; }
+        .bio { font-size: 14px; margin-bottom: 30px; line-height: 1.5; color: var(--text); }
+        .btn-insta {
+            background-color: var(--insta-blue);
+            color: white;
+            text-decoration: none;
+            padding: 10px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+            transition: opacity 0.3s;
         }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(56, 189, 248, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
-        }
-
-        footer {
-            margin-top: 24px;
-            font-size: 12px;
-            color: var(--text-dim);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+        .btn-insta:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <div class="profile-card">
-            <div class="avatar-container">
-                <div class="avatar-ring">
-                    <div class="avatar-inner">SN</div>
-                </div>
-            </div>
-
-            <h1>Sai Naveen</h1>
-            <div class="reg-no">RA2311003050059</div>
-
-            <p class="description">
-                Advanced Compiler Design Laboratory<br>
-                Multi-Phase Simulation Environment
-            </p>
-
-            <a href="simulation.html" class="btn-launch">Launch Compiler Engine</a>
+    <div class="profile-container">
+        <div class="story-ring">
+            <div class="profile-pic">SN</div>
         </div>
-
-        <footer>
-            Department of Computer Science & Engineering
-        </footer>
+        <h1>sai_naveen</h1>
+        <div class="reg-number">RA2311003050059</div>
+        <p class="bio">
+            <b>Compiler Design Portfolio</b><br>
+            Simulation of Lexical, Syntax, and Optimization phases.<br>
+            Full pipeline execution enabled. 🚀
+        </p>
+        <a href="simulation.html" class="btn-insta">Open Compiler Engine</a>
     </div>
-
 </body>
 </html>
